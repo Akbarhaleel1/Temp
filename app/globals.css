@@ -1,0 +1,102 @@
+:root{
+  --rose:#e8557a; --blush:#ffd6e0; --cream:#fff8f3; --wine:#6d1a36; --gold:#e9b44c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-serif),serif;background:var(--cream);color:var(--wine);overflow-x:hidden;font-size:20px;line-height:1.6}
+h1,h2,.script{font-family:var(--font-script),cursive}
+canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
+
+/* ---------- Envelope intro ---------- */
+#intro{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 50% 40%,#ffe3ea,#f6a5b9 70%,#e8557a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transition:opacity 1s,visibility 1s}
+#intro.gone{opacity:0;visibility:hidden}
+.envelope{position:relative;width:300px;height:200px;cursor:pointer;animation:float 3s ease-in-out infinite}
+.envelope .back{position:absolute;inset:0;background:#c93d63;border-radius:8px}
+.envelope .letter{position:absolute;left:15px;right:15px;top:10px;height:170px;background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--font-script),cursive;font-size:30px;color:var(--rose);transition:transform .8s .4s;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.envelope .front{position:absolute;inset:0;border-radius:8px;background:linear-gradient(to top right,#e8557a 50%,transparent 50.5%) left/50% 100% no-repeat,linear-gradient(to top left,#e8557a 50%,transparent 50.5%) right/50% 100% no-repeat;z-index:2}
+.envelope .flap{position:absolute;left:0;right:0;top:0;height:110px;background:#d9466d;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .6s;z-index:3}
+.envelope .seal{position:absolute;left:50%;top:88px;transform:translateX(-50%);z-index:4;font-size:34px;transition:opacity .3s}
+.envelope.open .flap{transform:rotateX(180deg);z-index:1}
+.envelope.open .seal{opacity:0}
+.envelope.open .letter{transform:translateY(-110px)}
+#intro p{color:#fff;font-size:24px;letter-spacing:1px;text-shadow:0 1px 6px rgba(0,0,0,.2)}
+@keyframes float{50%{transform:translateY(-12px)}}
+
+/* ---------- Sections ---------- */
+section{min-height:100vh;padding:90px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative}
+.hero{background:linear-gradient(180deg,#ffe3ea 0%,var(--cream) 100%)}
+.hero h1{font-size:clamp(56px,12vw,130px);color:var(--rose);line-height:1;text-shadow:3px 3px 0 #fff}
+.hero .name{font-size:clamp(48px,10vw,110px);color:var(--wine)}
+.hero .sub{margin-top:18px;font-style:italic;font-size:24px;max-width:560px}
+.scroll-hint{position:absolute;bottom:30px;font-size:16px;opacity:.7;animation:float 2s infinite}
+h2{font-size:clamp(44px,7vw,72px);color:var(--rose);margin-bottom:12px}
+.lead{font-style:italic;max-width:600px;margin-bottom:40px}
+
+/* Reasons flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:22px;max-width:1000px;width:100%}
+.card{height:220px;perspective:1000px;cursor:pointer}
+.card .in{position:relative;width:100%;height:100%;transition:transform .7s;transform-style:preserve-3d}
+.card .in.flip{transform:rotateY(180deg)}
+.card .f,.card .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;display:flex;align-items:center;justify-content:center;padding:22px;box-shadow:0 8px 24px rgba(232,85,122,.18)}
+.card .f{background:linear-gradient(135deg,var(--rose),#f58aa5);color:#fff;font-family:var(--font-script),cursive;font-size:34px;flex-direction:column}
+.card .f span{font-size:44px}
+.card .b{background:#fff;transform:rotateY(180deg);font-size:21px;border:2px solid var(--blush)}
+
+/* Photos */
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px;max-width:1000px;width:100%}
+.polaroid{background:#fff;padding:14px 14px 50px;box-shadow:0 10px 30px rgba(0,0,0,.12);transition:transform .3s;position:relative}
+.polaroid:nth-child(odd){transform:rotate(-3deg)}
+.polaroid:nth-child(even){transform:rotate(2.5deg)}
+.polaroid:hover{transform:rotate(0) scale(1.04);z-index:2}
+.polaroid label{display:flex;aspect-ratio:1;background:var(--blush);align-items:center;justify-content:center;cursor:pointer;overflow:hidden;font-size:17px;color:var(--rose);flex-direction:column;gap:6px}
+.polaroid label img{width:100%;height:100%;object-fit:cover}
+.polaroid input{display:none}
+.polaroid .cap{position:absolute;bottom:12px;left:0;right:0;font-family:var(--font-script),cursive;font-size:24px}
+
+/* Cake */
+.cake-wrap{position:relative;width:260px;height:300px;margin:20px auto}
+.cake{position:absolute;bottom:0;left:20px;width:220px}
+.layer{height:70px;border-radius:12px;margin-top:-6px;position:relative}
+.l1{background:#f7a8bc;width:220px}
+.l2{background:#fbc8d4;width:180px;margin-left:20px}
+.l3{background:#fff0f4;width:140px;margin-left:40px}
+.layer::after{content:"";position:absolute;top:0;left:0;right:0;height:16px;background:radial-gradient(circle at 10px 0,#fff 10px,transparent 11px) 0 0/20px 16px repeat-x}
+.plate{height:14px;background:#e9e1dc;border-radius:50%;width:260px;margin-left:-20px;margin-top:-4px}
+.cake{display:flex;flex-direction:column-reverse}
+.candles{position:absolute;bottom:216px;left:0;right:0;display:flex;justify-content:center;gap:26px}
+.candle{width:12px;height:46px;background:repeating-linear-gradient(45deg,#fff 0 6px,var(--rose) 6px 12px);border-radius:3px;position:relative}
+.flame{position:absolute;left:50%;top:-26px;width:14px;height:24px;margin-left:-7px;background:radial-gradient(circle at 50% 70%,#fff6a8,var(--gold) 50%,#f2702c);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;animation:flick .15s infinite alternate;transition:opacity .4s}
+.out .flame{opacity:0}
+@keyframes flick{to{transform:scale(1.08,.95) rotate(2deg)}}
+.btn{font-family:inherit;font-size:20px;padding:14px 32px;border:none;border-radius:40px;background:var(--rose);color:#fff;cursor:pointer;box-shadow:0 6px 18px rgba(232,85,122,.35);transition:transform .2s}
+.btn:hover{transform:translateY(-3px)}
+.btn.ghost{background:#fff;color:var(--rose);border:2px solid var(--rose);box-shadow:none}
+.row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+#wish{margin-top:18px;font-family:var(--font-script),cursive;font-size:34px;color:var(--rose);min-height:50px}
+
+/* Letter */
+.paper{max-width:680px;background:#fff;padding:50px 44px;border-radius:6px;box-shadow:0 14px 40px rgba(109,26,54,.12);text-align:left;position:relative;background-image:repeating-linear-gradient(transparent 0 35px,#fbe3ea 35px 36px)}
+.paper p{margin-bottom:16px;font-size:22px}
+.paper .sign{font-family:var(--font-script),cursive;font-size:36px;color:var(--rose);text-align:right;margin-top:20px}
+
+/* Timeline */
+.timeline{max-width:700px;width:100%;position:relative;text-align:left}
+.timeline::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:3px;background:var(--blush)}
+.moment{position:relative;padding:0 0 34px 56px;opacity:0;transform:translateY(30px);transition:all .8s}
+.moment.show{opacity:1;transform:none}
+.moment::before{content:"♥";position:absolute;left:6px;top:-2px;color:var(--rose);font-size:26px;background:var(--cream)}
+.moment h3{font-family:var(--font-script),cursive;font-size:30px;color:var(--rose)}
+
+.final{background:linear-gradient(180deg,var(--cream),#ffd6e0)}
+.final h2{font-size:clamp(50px,9vw,96px)}
+footer{padding:30px;text-align:center;font-size:16px;opacity:.6}
+.reveal{opacity:0;transform:translateY(40px);transition:all 1s}
+.reveal.show{opacity:1;transform:none}
+#lightbox{position:fixed;inset:0;z-index:90;background:rgba(40,8,20,.88);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;cursor:zoom-out;padding:20px}
+#lightbox.on{display:flex}
+#lightbox img{max-width:92vw;max-height:80vh;border:10px solid #fff;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#lbCap{color:#fff;font-size:34px}
+.polaroid label{cursor:zoom-in}
+#music{position:fixed;bottom:20px;right:20px;z-index:60;width:54px;height:54px;border-radius:50%;border:none;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.15);font-size:24px;cursor:pointer}
+.polaroid label{position:relative}
+.letter-greeting{font-size:34px;color:var(--rose)}
